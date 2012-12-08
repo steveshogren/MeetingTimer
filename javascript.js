@@ -24,53 +24,49 @@ $(document).ready(function() {
         seconds = roundToTens(Math.ceil(divisor_for_seconds)),
         dollars = roundTo(.011 * secondsRaw, 100);
 
-        updateFlip(hours, minutes/10, minutes%10, seconds/10, seconds%10, "AM");
+        updateFlip(hours, minutes/10, minutes%10, seconds/10, seconds%10);
     },
 
-    flip = function (upperId, lowerId, changeNumber, pathUpper, pathLower){
-		    var upperBackId = upperId+"Back";
-		    $("#" + upperId).attr("src", $("#" + upperBackId).attr("src"));
-		    $("#" + upperId).css("height", "64px");
-		    $("#" + upperId).css("visibility", "visible");
-		    $("#" + upperBackId).attr("src", pathUpper+parseInt(changeNumber)+".png");
-		    
-		    $("#" + lowerId).attr("src", pathLower+parseInt(changeNumber)+".png");
-		    $("#" + lowerId).css("height", "0px");
-		    $("#" + lowerId).css("visibility", "visible");
-		    
-		    var flipLower = new Fx.Tween(lowerId, {duration: 200, transition: Fx.Transitions.Sine.easeInOut});
-		    flipLower.addEvents({
-				    'complete': function(){	
-						    lowerBackId = lowerId+"Back";
-						    $("#" + lowerBackId).attr("src", $("#" + lowerId).attr("src"));
-						    $("#" + lowerId).css("visibility", "hidden");
-						    $("#" + upperId).css("visibility", "hidden");
-				    }
-        });					
-		    var flipUpper = new Fx.Tween(upperId, {duration: 200, transition: Fx.Transitions.Sine.easeInOut});
-		    flipLower.start('height', 64);
-		    flipUpper.start('height', 0);
+    flip = function (upperId, lowerId, changeNumber, pathUpper, pathLower) {
+        var $upper = $("#"+upperId),
+        $upperBack = $("#"+upperId+"Back"),
+        $lower = $("#"+lowerId),
+        $lowerBack = $("#"+lowerId+"Back");
+
+        $upper.hide();
+        $upper.attr("src", pathUpper+parseInt(changeNumber)+".png");
+            $lower.hide();
+            $lower.attr("src", pathLower+parseInt(changeNumber)+".png");
+
+        var speed = 200;
+
+        $lower.animate({height: "toggle"},speed, function() {
+            $upper.animate({height: "toggle"}, speed, function() {
+                $lowerBack.attr("src", $lower.attr("src"));
+                $upperBack.attr("src", $upper.attr("src"));
+            });
+        });
     },
-    updateFlip = function (hours, minTens, minOnes, secTens, secOnes, amPm) {
-		    //change pads
-		    if( hours != h_current){
-			      flip('hoursUp', 'hoursDown', hours, 'Single/Up/'+ amPm +'/', 'Single/Down/' + amPm + '/');
-			      h_current = hours;
-		    }
-		    if( minOnes != m2_current || minTens != m1_current){
-			      flip('minutesUpRight', 'minutesDownRight', minOnes, 'Double/Up/Right/', 'Double/Down/Right/');
-			      m2_current = minOnes;
-			      
-			      flip('minutesUpLeft', 'minutesDownLeft', minTens, 'Double/Up/Left/', 'Double/Down/Left/');
-			      m1_current = minTens;
-		    }
-		    if (secOnes != s2_current || secTens != s1_current){
-			      flip('secondsUpRight', 'secondsDownRight', secOnes, 'Double/Up/Right/', 'Double/Down/Right/');
-			      s2_current = secOnes;
-			      
-			      flip('secondsUpLeft', 'secondsDownLeft', secTens, 'Double/Up/Left/', 'Double/Down/Left/');
-			      s1_current = secTens;
-		    }
+    updateFlip = function (hours, minTens, minOnes, secTens, secOnes) {
+        //change pads
+        if( hours != h_current){
+            flip('hoursUp', 'hoursDown', hours, 'Single/Up/', 'Single/Down/');
+            h_current = hours;
+        }
+        if( minOnes != m2_current || minTens != m1_current){
+            flip('minutesUpRight', 'minutesDownRight', minOnes, 'Double/Up/Right/', 'Double/Down/Right/');
+            m2_current = minOnes;
+            
+            flip('minutesUpLeft', 'minutesDownLeft', minTens, 'Double/Up/Left/', 'Double/Down/Left/');
+            m1_current = minTens;
+        }
+        if (secOnes != s2_current || secTens != s1_current){
+            flip('secondsUpRight', 'secondsDownRight', secOnes, 'Double/Up/Right/', 'Double/Down/Right/');
+            s2_current = secOnes;
+            
+            flip('secondsUpLeft', 'secondsDownLeft', secTens, 'Double/Up/Left/', 'Double/Down/Left/');
+            s1_current = secTens;
+        }
     },
     init = function() {
         for (var i = minNumber; i <= maxNumber; i++) {
@@ -78,13 +74,13 @@ $(document).ready(function() {
         }
         updateTimer();
         setInterval(updateTimer, 1000);
+        $('#selectListID').change(function () {
+            people = parseInt($("#selectListID option:selected").text());
+        });
+        $('#resetButton').click(function () {
+            secondsRaw = 0;
+        });
     };
     init();
-    $('#selectListID').change(function () {
-        people = parseInt($("#selectListID option:selected").text());
-    });
-    $('#resetButton').click(function () {
-        secondsRaw = 0;
-    });
 });
 
