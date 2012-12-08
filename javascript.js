@@ -23,8 +23,7 @@ $(document).ready(function() {
         divisor_for_seconds = roundToTens(divisor_for_minutes % 60),
         seconds = roundToTens(Math.ceil(divisor_for_seconds)),
         dollars = roundTo(.011 * secondsRaw, 100);
-
-        updateFlip(hours, minutes/10, minutes%10, seconds/10, seconds%10);
+        updateFlip(hours%12, minutes/10, minutes%10, seconds/10, seconds%10);
     },
 
     flip = function (upperId, lowerId, changeNumber, pathUpper, pathLower) {
