@@ -24,7 +24,7 @@ $(document).ready(function() {
         seconds = roundToTens(Math.ceil(divisor_for_seconds)),
         dollars = roundTo(.011 * secondsRaw, 100);
 
-        updateFlip(hours, minutes/10, minutes%10, seconds/10, seconds%10, "AM");
+        updateFlip(hours, minutes/10, minutes%10, seconds/10, seconds%10);
     },
 
     flip = function (upperId, lowerId, changeNumber, pathUpper, pathLower){
@@ -51,10 +51,10 @@ $(document).ready(function() {
 		    flipLower.start('height', 64);
 		    flipUpper.start('height', 0);
     },
-    updateFlip = function (hours, minTens, minOnes, secTens, secOnes, amPm) {
+    updateFlip = function (hours, minTens, minOnes, secTens, secOnes) {
 		    //change pads
 		    if( hours != h_current){
-			      flip('hoursUp', 'hoursDown', hours, 'Single/Up/'+ amPm +'/', 'Single/Down/' + amPm + '/');
+			      flip('hoursUp', 'hoursDown', hours, 'Single/Up/', 'Single/Down/');
 			      h_current = hours;
 		    }
 		    if( minOnes != m2_current || minTens != m1_current){
