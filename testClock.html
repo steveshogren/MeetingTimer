@@ -1,11 +1,19 @@
 <html>
 <head>
 <script type="text/javascript" src="jquery.js"></script>     
-</head>
+<!--[if IE]><script type="text/javascript" src="excanvas.js"></script><![endif]--> 
+<!-- <script type="text/javascript" src="coolclock.js"></script> -->
+<!--
+		<script type="text/javascript" src="moreskins.js"></script>
 <body onload="updateTimer(); setInterval('updateTimer()', 1000 )">
-<span id="clock">&nbsp;</span>
+		-->
+</head>
 <span id="timer">&nbsp;</span>
-<select name="numPicker" id="selectListID"> </select>
-<script type="text/javascript" src="javascript.js"></script>     
+<input type="button" id="resetButton" value="Reset" />
+<br />
+Attendees: <select name="numPicker" id="selectListID"> </select>
+<br />
+<canvas id="clockid" class="CoolClock"></canvas>
+<script type="text/javascript" src="javascript.js"></script> <br />
 </body>
 </html>
