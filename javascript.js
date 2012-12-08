@@ -23,8 +23,7 @@ $(document).ready(function() {
         divisor_for_seconds = roundToTens(divisor_for_minutes % 60),
         seconds = roundToTens(Math.ceil(divisor_for_seconds)),
         dollars = roundTo(.011 * secondsRaw, 100);
-        
-        //$("#timer").text("Total time: " + hours + ":" + minutes + ":" + seconds + " dollars: " + dollars);
+
         updateFlip(hours, minutes/10, minutes%10, seconds/10, seconds%10, "AM");
     },
 
